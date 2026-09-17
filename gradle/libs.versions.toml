@@ -1,0 +1,35 @@
+[versions]
+agp = "8.13.2"
+kotlin = "2.2.20"
+android-minSdk = "24"
+android-compileSdk = "36"
+android-ndk = "27.3.13750724"
+heidi = "0.19.26"
+skie = "0.10.10"
+kotlinx-serialization = "1.9.0"
+kotlinx-coroutines = "1.9.0"
+mavenpublish = "0.37.0"
+uniffi = "1.0.14"
+
+[libraries]
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+
+# Heidi KMP libraries
+heidi-proximity = { module = "ch.heidi-universe:heidi-proximity", version.ref = "heidi" }
+heidi-dcql = { module = "ch.heidi-universe:heidi-dcql", version.ref = "heidi" }
+heidi-presentation = { module = "ch.heidi-universe:heidi-presentation", version.ref = "heidi" }
+heidi-credentials = { module = "ch.heidi-universe:heidi-credentials", version.ref = "heidi" }
+heidi-util = { module = "ch.heidi-universe:heidi-util", version.ref = "heidi" }
+heidi-crypto = { module = "ch.heidi-universe:heidi-crypto", version.ref = "heidi" }
+
+skie = { module = "co.touchlab.skie:configuration-annotations", version.ref = "skie" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+
+[plugins]
+android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+skie = { id = "co.touchlab.skie", version.ref = "skie" }
+vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "mavenpublish" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+uniffi-plugin = { id = "ch.ubique.uniffi.plugin", version.ref = "uniffi" }

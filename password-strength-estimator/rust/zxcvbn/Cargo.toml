@@ -1,0 +1,12 @@
+[package]
+name = "password-strength-estimator-wrapper"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "staticlib"]
+
+[dependencies]
+zxcvbn = "3.1"
+uniffi = "0.32.0"

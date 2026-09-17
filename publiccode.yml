@@ -1,0 +1,46 @@
+publiccodeYmlVersion: 0.5.0
+name: swiyu Shared KMP Libraries
+applicationSuite: swiyu Trust Infrastructure
+url: https://github.com/admin-ch-ssi/PERA_swiyu_shared_kmp
+platforms:
+  - android
+  - ios
+categories:
+  - digital-citizenship
+  - identity-management
+usedBy:
+  - Federal Office of Justice
+  - Federal Office of Information Technology, Systems and Telecommunication
+  - Fedpol
+  - Astra
+developmentStatus: beta
+softwareType: library
+organisation:
+  uri: https://ld.admin.ch/office/III.1.2
+  name: Bundesamt für Justiz
+description:
+  en:
+    localisedName: swiyu Shared KMP Libraries
+    shortDescription: Shared Kotlin Multiplatform libraries for the swiyu Trust Infrastructure
+    longDescription: This repository contains shared Kotlin Multiplatform libraries used by the swiyu mobile apps. It provides reusable building blocks and exported APIs for Android and iOS integrations within the swiyu Trust Infrastructure.
+    apiDocumentation: https://swiyu-admin-ch.github.io/technology-stack/
+    features:
+      - Shared Kotlin Multiplatform libraries
+      - Android and iOS integration building blocks
+      - Verifiable credential and proximity support
+legal:
+  license: MIT
+maintenance:
+  type: internal
+  contacts:
+    - name: Andre Kunz
+      email: info@swiyu.admin.ch
+      affiliation: Federal Office of Justice
+localisation:
+  localisationReady: true
+  availableLanguages:
+    - en
+    - de
+    - fr
+    - it
+    - rm
