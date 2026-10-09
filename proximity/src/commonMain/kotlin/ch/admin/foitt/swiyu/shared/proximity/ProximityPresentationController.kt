@@ -1,9 +1,5 @@
 package ch.admin.foitt.swiyu.shared.proximity
 
-import ch.ubique.heidi.proximity.ProximityProtocol
-import ch.ubique.heidi.proximity.documents.DocumentRequest
-import ch.ubique.heidi.proximity.wallet.ProximityWallet
-import ch.ubique.heidi.proximity.wallet.ProximityWalletState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -13,12 +9,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.kapunsdk.proximity.ProximityProtocol
+import org.kapunsdk.proximity.documents.DocumentRequest
+import org.kapunsdk.proximity.wallet.ProximityWallet
+import org.kapunsdk.proximity.wallet.ProximityWalletState
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 
 /**
- * Controller for managing proximity presentation between iOS app and heidi SDK.
+ * Controller for managing proximity presentation between iOS app and Kapun SDK.
  */
 class ProximityPresentationController {
 	private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)

@@ -2,13 +2,17 @@ import com.vanniktech.maven.publish.DeploymentValidation
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.uniffi.plugin)
     alias(libs.plugins.vanniktech.mavenPublish)
 }
 
 kotlin {
-    androidTarget()
+    androidLibrary {
+        namespace = "ch.admin.foitt.swiyu.shared.passwordstrengthestimator"
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
+    }
     jvm()
 
     listOf(
@@ -27,26 +31,13 @@ kotlin {
     }
 }
 
-android {
-    namespace = "ch.admin.foitt.swiyu.shared.passwordstrengthestimator"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-    ndkVersion = libs.versions.android.ndk.get()
-    defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
-    }
-
-    // TODO: enable android tests
-    testOptions {
-        unitTests.all { it.isEnabled = false }
-    }
-}
-
 uniffi {
     generateFromLibrary()
 }
 
 cargo {
     packageDirectory = layout.projectDirectory.dir("rust/zxcvbn")
+    ndkVersion = libs.versions.android.ndk.get()
 }
 
 

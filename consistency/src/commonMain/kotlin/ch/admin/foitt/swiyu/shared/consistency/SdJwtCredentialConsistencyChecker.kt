@@ -1,14 +1,14 @@
 package ch.admin.foitt.swiyu.shared.consistency
 
-import ch.ubique.heidi.credentials.SdJwt
-import ch.ubique.heidi.util.extensions.asArray
-import ch.ubique.heidi.util.extensions.asObject
-import ch.ubique.heidi.util.extensions.get
-import ch.ubique.heidi.util.extensions.isArray
-import ch.ubique.heidi.util.extensions.isObject
-import ch.ubique.heidi.util.extensions.isSame
-import uniffi.heidi_crypto_rust.getKidFromJwt
-import uniffi.heidi_util_rust.Value
+import org.kapunsdk.credentials.SdJwt
+import org.kapunsdk.util.extensions.asArray
+import org.kapunsdk.util.extensions.asObject
+import org.kapunsdk.util.extensions.get
+import org.kapunsdk.util.extensions.isArray
+import org.kapunsdk.util.extensions.isObject
+import org.kapunsdk.util.extensions.isSame
+import uniffi.kapun_crypto_rust.getKidFromJwt
+import uniffi.kapun_util_rust.Value
 
 class SdJwtCredentialConsistencyChecker(
 	// Claims that MUST differ, e.g. the confirmation key must be distinct

@@ -3,7 +3,7 @@ package ch.admin.foitt.swiyu.shared.dcql
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
-import uniffi.heidi_util_rust.Value
+import uniffi.kapun_util_rust.Value
 
 class DcqlSupportTest {
 

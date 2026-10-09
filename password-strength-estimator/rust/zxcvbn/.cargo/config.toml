@@ -1,0 +1,4 @@
+# Align native library segments to 16 KB, required by Google Play for Android 15+ devices.
+# https://developer.android.com/guide/practices/page-sizes
+[target.aarch64-linux-android]
+rustflags = ["-C", "link-arg=-Wl,-z,max-page-size=16384"]

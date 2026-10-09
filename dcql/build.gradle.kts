@@ -26,10 +26,10 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            api(libs.heidi.credentials)
-			api(libs.heidi.crypto)
-            api(libs.heidi.dcql)
-            api(libs.heidi.util)
+            api(libs.kapun.credentials)
+			api(libs.kapun.crypto)
+            api(libs.kapun.dcql)
+            api(libs.kapun.util)
             api(libs.kotlinx.serialization.json)
         }
         commonTest.dependencies {

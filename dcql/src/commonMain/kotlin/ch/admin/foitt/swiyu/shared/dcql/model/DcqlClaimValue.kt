@@ -1,7 +1,7 @@
 package ch.admin.foitt.swiyu.shared.dcql.model
 
-import uniffi.heidi_credentials_rust.PointerPart
-import uniffi.heidi_util_rust.Value
+import uniffi.kapun_credential_core_rust.PointerPart
+import uniffi.kapun_util_rust.Value
 
 /**
  * Resolved claim value for a DCQL request.

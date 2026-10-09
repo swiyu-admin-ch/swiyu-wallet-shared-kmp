@@ -31,16 +31,16 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            // Heidi KMP libraries
-            implementation(libs.heidi.credentials)
-            implementation(libs.heidi.crypto)
-            implementation(libs.heidi.util) // For Logger and Value
+            // Kapun SDK KMP libraries
+            implementation(libs.kapun.credentials)
+            implementation(libs.kapun.crypto)
+            implementation(libs.kapun.util) // For Logger and Value
             implementation(libs.kotlinx.coroutines.core)
         }
 
         commonTest.dependencies {
             implementation(libs.kotlin.test)
-            implementation(libs.heidi.crypto)
+            implementation(libs.kapun.crypto)
         }
 
         androidMain.dependencies { }

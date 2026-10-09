@@ -29,7 +29,8 @@ val modules = listOf(
 	"consistency",
 	"dcql",
 	"proximity",
-	"password-strength-estimator"
+	"password-strength-estimator",
+	"backup"
 )
 
 tasks.register("allTests") {

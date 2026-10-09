@@ -36,7 +36,24 @@ class PasswordEvaluatorTest {
         assertEquals(PasswordStrength.WEAK, strength)
     }
 
-    private val weakPasswords = listOf("Password1!", "qwerty", "aaaaaa", "hunter2", "", "123456789")
+    @Test
+    fun commonPasswords_returnWeak() {
+        commonPasswords.forEach { password ->
+            assertEquals(PasswordStrength.WEAK, evaluator.evaluate(password), "for \"$password\"")
+        }
+    }
+
+    private val commonPasswords = listOf(
+        "PE#5GZ29PTZMSE",
+        "pe#5gz29ptzmse",
+        "W5tXn36alfW",
+        "N8ZGT5P0sHw=",
+        "DIGITALEIDENTITÃ„Tpass",
+        "digitaleidentitã„tpass",
+        "digital.identity!!",
+        "DIGITAL.identity!!",
+    )
+    private val weakPasswords =listOf("Password1!", "qwerty", "aaaaaa", "hunter2", "", "123456789")
     private val moderatePasswords = listOf("Summer2024!", "swiyu-10?%")
     private val strongPasswords = listOf("k7Rq\$m2Vx9pL", "plum-tiger-9-velvet-comb", "]-(|\"\$\"<^_,#{.?,'.'::!!&&#|~#-\$=", "J.i<yyBddw<S@LgKs)UPsq=GX!@8e{c0T~%:`qv@H:#neS.6o&")
     private val mockBlackList = listOf("swiyu_1", "swiyu_2")

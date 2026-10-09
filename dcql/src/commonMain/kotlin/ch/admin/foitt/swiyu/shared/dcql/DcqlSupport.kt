@@ -2,24 +2,25 @@ package ch.admin.foitt.swiyu.shared.dcql
 
 import ch.admin.foitt.swiyu.shared.dcql.model.DcqlClaimValue
 import ch.admin.foitt.swiyu.shared.dcql.model.DcqlCredentialMatch
-import ch.ubique.heidi.credentials.asSelector
-import ch.ubique.heidi.credentials.get
-import ch.ubique.heidi.credentials.toClaimsPointer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.SerializationException
-import uniffi.heidi_credentials_rust.PointerPart
-import uniffi.heidi_dcql_rust.Credential
-import uniffi.heidi_dcql_rust.DcqlQuery
-import uniffi.heidi_dcql_rust.Disclosure
-import uniffi.heidi_dcql_rust.selectCredentialsWithInfo
-import uniffi.heidi_util_rust.Value
+import org.kapunsdk.SdJwtParser
+import org.kapunsdk.credentials.asSelector
+import org.kapunsdk.credentials.get
+import uniffi.kapun_credential_core_rust.PointerPart
+import uniffi.kapun_dcql_rust.Credential
+import uniffi.kapun_dcql_rust.DcqlQuery
+import uniffi.kapun_dcql_rust.Disclosure
+import uniffi.kapun_dcql_rust.selectCredentialsWithInfo
+import uniffi.kapun_util_rust.Value
 
 /**
- * DCQL helper methods that wrap Heidi query matching and VP token generation.
+ * DCQL helper methods that wrap Kapun SDK query matching and VP token generation.
  */
 object DcqlSupport {
 
 	init {
+		SdJwtParser.register()
 		SwissProfileTrustedDidAuthority.register()
 	}
 
@@ -36,7 +37,7 @@ object DcqlSupport {
 	/**
 	 * Matches credential payloads against a DCQL query and returns candidate matches.
 	 *
-	 * This uses Heidi's DCQL selector to evaluate each payload and then extracts
+	 * This uses the Kapun SDK's DCQL selector to evaluate each payload and then extracts
 	 * the original credential payload and resolved claim values for each matching disclosure.
 	 *
 	 * @param query DCQL query to evaluate.
@@ -79,19 +80,21 @@ object DcqlSupport {
 
 	fun resolvePath(credential: Credential, path: List<PointerPart>): Value = when (credential) {
 		is Credential.SdJwtCredential -> {
-			credential.v1.claims.get(path.asSelector()).first()
+			credential.v1.getBody().get(path.asSelector()).first()
 		}
 		is Credential.MdocCredential -> Value.Null
 		is Credential.W3cCredential -> Value.Null
 		is Credential.BbsCredential -> Value.Null
 		is Credential.OpenBadge303Credential -> Value.Null
+		is Credential.Other -> Value.Null
 	}
 
 	private fun Disclosure.extractOriginalPayload(): String? = when (val credential = credential) {
-		is Credential.SdJwtCredential -> credential.v1.originalSdjwt
-		is Credential.MdocCredential -> credential.v1.originalMdoc
-		is Credential.W3cCredential -> credential.v1.originalSdjwt
-		is Credential.BbsCredential -> credential.v1.originalBbs
+		is Credential.SdJwtCredential -> credential.v1.serialize()
+		is Credential.MdocCredential -> credential.v1.serialize()
+		is Credential.W3cCredential -> credential.v1.serialize()
+		is Credential.BbsCredential -> credential.v1.serialize()
 		is Credential.OpenBadge303Credential -> null
+		is Credential.Other -> null
 	}
 }

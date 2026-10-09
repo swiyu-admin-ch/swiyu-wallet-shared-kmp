@@ -27,23 +27,23 @@ kotlin {
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             linkerOpts("-framework", "Security")
-            // Export heidi libraries to iOS
-            export(libs.heidi.proximity)
-            export(libs.heidi.dcql) // Needed for DcqlQuery type
-            export(libs.heidi.presentation)
-            export(libs.heidi.credentials)
-            export(libs.heidi.util)
+            // Export Kapun SDK libraries to iOS
+            export(libs.kapun.proximity)
+            export(libs.kapun.dcql) // Needed for DcqlQuery type
+            export(libs.kapun.presentation)
+            export(libs.kapun.credentials)
+            export(libs.kapun.util)
         }
     }
 
     sourceSets {
         commonMain.dependencies {
-            // Heidi KMP libraries
-            api(libs.heidi.proximity)
-            api(libs.heidi.dcql) // For DcqlQuery type
-            api(libs.heidi.presentation)
-            api(libs.heidi.credentials)
-            api(libs.heidi.util) // For Logger and Value
+            // Kapun SDK KMP libraries
+            api(libs.kapun.proximity)
+            api(libs.kapun.dcql) // For DcqlQuery type
+            api(libs.kapun.presentation)
+            api(libs.kapun.credentials)
+            api(libs.kapun.util) // For Logger and Value
             implementation(libs.kotlinx.coroutines.core)
         }
 

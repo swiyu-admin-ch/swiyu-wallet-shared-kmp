@@ -27,8 +27,8 @@ kotlin {
 			export(project(":dcql"))
 			export(project(":proximity"))
 			export(project(":consistency"))
+			export(libs.kapun.proximity)
 			export(project(":password-strength-estimator"))
-			export(libs.heidi.proximity)
 
             // Ensure swiftinterface generation and stable bundle id.
             binaryOption("bundleId", "ch.admin.foitt.swiyu.shared.kmp")
@@ -56,8 +56,14 @@ skie {
 	features {
 		group {
 			SuppressSkieWarning.NameCollision(true)
+		}
+
+		// Enable DefaultArgumentInterop only for our codebase
+		// otherwwse it also applies to kotlin code (e.g. kotlinx.serialization) which fails on iOS
+		group("ch.admin.foitt") {
 			DefaultArgumentInterop.Enabled(true)
 		}
+
 		enableSwiftUIObservingPreview = true
 		enableFlowCombineConvertorPreview = true
 		enableFutureCombineExtensionPreview = true

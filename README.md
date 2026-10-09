@@ -32,8 +32,8 @@ For more information about the project please visit the [introduction into Publi
 
 The repository is a Gradle multi-module project containing the following Kotlin Multiplatform modules (no app UI or platform-specific app code):
 
-- `dcql`: DCQL (Digital Credentials Query Language) support — query matching, credential models and helpers built on top of the Heidi DCQL libraries.
-- `proximity`: Proximity presentation support for in-person / offline credential presentation, exposing the Heidi proximity APIs.
+- `dcql`: DCQL (Digital Credentials Query Language) support — query matching, credential models and helpers built on top of the Kapun SDK DCQL libraries.
+- `proximity`: Proximity presentation support for in-person / offline credential presentation, exposing the Kapun SDK proximity APIs.
 - `consistency`: Check consistency between SD-JWTs
 - `password-strength-estimator`: Wrapper around zxcvbn to indicate strength of a password string
 - `library`: Umbrella module that exports the shared APIs and builds the `BITSwiyuSharedKMP` XCFramework for iOS.

@@ -1,11 +1,12 @@
 package ch.admin.foitt.swiyu.shared.dcql
 
-import uniffi.heidi_crypto_rust.getKidFromJwt
-import uniffi.heidi_dcql_rust.Credential
-import uniffi.heidi_dcql_rust.TrustedAuthority
-import uniffi.heidi_dcql_rust.TrustedAuthorityMatcher
-import uniffi.heidi_dcql_rust.TrustedAuthorityQueryType
-import uniffi.heidi_dcql_rust.registerMatcher
+import org.kapunsdk.SdJwtCredential
+import uniffi.kapun_crypto_rust.getKidFromJwt
+import uniffi.kapun_dcql_rust.Credential
+import uniffi.kapun_dcql_rust.TrustedAuthority
+import uniffi.kapun_dcql_rust.TrustedAuthorityMatcher
+import uniffi.kapun_dcql_rust.TrustedAuthorityQueryType
+import uniffi.kapun_dcql_rust.registerMatcher
 
 object SwissProfileTrustedDidAuthority : TrustedAuthorityMatcher {
 
@@ -17,7 +18,8 @@ object SwissProfileTrustedDidAuthority : TrustedAuthorityMatcher {
 	): Boolean? {
 		return when (value) {
 			is Credential.SdJwtCredential -> {
-				val kid = getKidFromJwt(value.v1.originalJwt)
+				val sdJwt = (value.v1 as? SdJwtCredential)?.sdjwt ?: return null
+				val kid = getKidFromJwt(sdJwt.originalJwt)
 				val did = kid?.let {
 					getDidFromAbsoluteKid(kid)
 				}  ?: return false

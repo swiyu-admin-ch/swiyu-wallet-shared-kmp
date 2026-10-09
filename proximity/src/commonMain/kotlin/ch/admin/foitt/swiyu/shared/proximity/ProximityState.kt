@@ -1,6 +1,6 @@
 package ch.admin.foitt.swiyu.shared.proximity
 
-import ch.ubique.heidi.proximity.ProximityError
+import org.kapunsdk.proximity.ProximityError
 
 /**
  * State representation for proximity presentation that can be easily consumed by iOS
