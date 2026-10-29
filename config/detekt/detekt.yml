@@ -1,0 +1,133 @@
+# Applied by DetektConventionPlugin (build-logic):
+
+config:
+  validation: true
+  warningsAsErrors: false
+
+processors:
+  active: true
+  # Only file processor ids belong here. Path-based filtering is handled by the
+  # detektModule/detekt tasks (include/exclude + basePath).
+
+naming:
+  active: true
+  NoNameShadowing:
+    active: true  # default: false
+  PackageNaming:
+    active: true
+    packagePattern: '[a-z]+(\.[a-z][a-z0-9]*)*'
+
+complexity:
+  active: true
+  LargeClass:
+    active: false  # default: true, allowedLines: 600
+  LongMethod:
+    active: false
+    allowedLines: 60
+  TooManyFunctions:
+    active: true
+    allowedFunctionsPerFile: 20
+    allowedFunctionsPerClass: 20
+    allowedFunctionsPerInterface: 20
+    allowedFunctionsPerObject: 20
+    allowedFunctionsPerEnum: 20
+    ignoreDeprecated: false
+    ignorePrivate: true  # default: false
+    ignoreOverridden: false
+    excludes: [ '**/*Test/**' ]
+  LongParameterList:
+    allowedFunctionParameters: 9
+    allowedConstructorParameters: 9
+
+empty-blocks:
+  active: true
+
+exceptions:
+  active: true
+  TooGenericExceptionCaught:
+    active: true
+
+coroutines:
+  active: true
+  # Active by default: InjectDispatcher, RedundantSuspendModifier, SleepInsteadOfDelay,
+  # SuspendFunWithFlowReturnType.
+  # Best practice for shared KMP code (off by default):
+  GlobalCoroutineUsage:
+    active: true  # default: false - shared code must not leak GlobalScope.launch/async
+  SuspendFunWithCoroutineScopeReceiver:
+    active: true  # default: false - suspend fun on CoroutineScope hides structured-concurrency bugs
+  SuspendFunSwallowedCancellation:
+    active: true  # default: false - suspend code must rethrow CancellationException
+
+style:
+  active: true
+  ThrowsCount:
+    active: true
+    max: 3
+  # KMP: keep expect declarations and shared code platform agnostic. The guard only applies
+  # to commonMain, so actual implementations in androidMain / iosMain / jvmMain may import
+  # platform APIs (e.g. java.io.File in the backup module, platform.* in iOS code).
+  ForbiddenImport:
+    active: true
+    includes: [ '**/commonMain/**' ]
+    forbiddenImports:
+      - value: 'android.*'
+        reason: 'no android specific code'
+      - value: 'java.*'
+        reason: 'no jvm specific code'
+      - value: 'javax.*'
+        reason: 'no jvm specific code'
+      - value: 'platform.*'
+        reason: 'no iOS specific code'
+  MaxLineLength:
+    active: false  # line length is governed by ktlint -> MaximumLineLength (default 120)
+  MagicNumber:
+    active: false  # crypto/serialization code relies on literal constants
+    ignorePropertyDeclaration: true
+    ignoreCompanionObjectPropertyDeclaration: true
+  ForbiddenComment:
+    comments:
+      - reason: 'Forbidden FIXME todo marker in comment, please fix the problem.'
+        value: 'FIXME'
+      - reason: 'Forbidden STOPSHIP todo marker in comment, please address the problem before shipping the code.'
+        value: 'STOPSHIP'
+  # Library hygiene: no stdout printing in shared library code.
+  ForbiddenMethodCall:
+    active: true  # default: false
+    methods:
+      - reason: 'print does not allow you to configure the output stream. Use a logger instead.'
+        value: 'kotlin.io.print'
+      - reason: 'println does not allow you to configure the output stream. Use a logger instead.'
+        value: 'kotlin.io.println'
+  ReturnCount:
+    active: true
+    max: 3
+    excludeGuardClauses: true
+
+ktlint:
+  active: true
+  code_style: 'ktlint_official'
+  indentStyle: 'space'
+  # Opinionated ktlint rules kept disabled (they are not part of the ktlint_official
+  # wrapping style and conflict with the project's conventions):
+  BlankLineBetweenWhenConditions:
+    active: false  # default: true
+  FunctionExpressionBody:
+    active: false  # default: true
+
+performance:
+  active: true
+  SpreadOperator:
+    active: true
+
+potential-bugs:
+  active: true
+  # Best practice additions (off by default):
+  ElseCaseInsteadOfExhaustiveWhen:
+    active: true  # default: false - new enum/sealed entries must not silently fall into 'else'
+  DontDowncastCollectionTypes:
+    active: true  # default: false
+  NullableToStringCall:
+    active: true  # default: false - x?.toString() produces the string "null"
+  UnconditionalJumpStatementInLoop:
+    active: true  # default: false - break/continue in loops without condition

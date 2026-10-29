@@ -24,6 +24,3 @@ internal class OCABundleContainerV1 private constructor(
             .ifNotEmpty { bundleDtos -> OCABundleContainerV1(bundleDtos) }
     }
 }
-
-
-

@@ -12,3 +12,11 @@ xcuserdata
 #So we don't accidentally commit our private keys
 *.gpg
 .env
+#ci artifacts
+**/*.aar
+**/*.xcframework
+**/*.zip
+**/changelog*
+ci_reports
+fastlane/README.md
+fastlane/report.xml

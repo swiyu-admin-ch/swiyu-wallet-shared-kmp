@@ -15,9 +15,11 @@ internal data class SchemaDto(
 internal fun List<VC>.toSchemaDtoList(): List<SchemaDto> = this
     .flatMap { it.credentials }
     .groupBy({ it.jsonSchema }, { it.id.toString() })
-    .map { it.toSchemaDto() }
+    .mapNotNull { it.toSchemaDto() }
 
-internal fun Map.Entry<String, List<String>>.toSchemaDto() = SchemaDto(
-    credentialIds = value,
-    data = key
-)
+internal fun Map.Entry<String?, List<String>>.toSchemaDto() = key?.let {
+    SchemaDto(
+        credentialIds = value,
+        data = it,
+    )
+}

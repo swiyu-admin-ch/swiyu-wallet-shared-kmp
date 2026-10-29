@@ -19,5 +19,5 @@ internal fun List<VC>.toMetadataDtoList(): List<MetadataDto> = this
 
 internal fun Map.Entry<String, List<String>>.toMetadataDto() = MetadataDto(
     credentialIds = value,
-    data = key
+    data = key,
 )

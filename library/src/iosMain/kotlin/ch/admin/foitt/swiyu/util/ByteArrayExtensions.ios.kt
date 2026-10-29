@@ -12,20 +12,20 @@ import kotlin.collections.isEmpty
 import kotlin.toULong
 
 @OptIn(ExperimentalForeignApi::class)
-fun ByteArray.toData() : NSData {
-	if (this.isEmpty()) {
-		return NSData()
-	}
-	return this.usePinned {
-		NSData.dataWithBytes(it.addressOf(0), it.get().size.toULong())
-	}
+fun ByteArray.toData(): NSData {
+    if (this.isEmpty()) {
+        return NSData()
+    }
+    return this.usePinned {
+        NSData.dataWithBytes(it.addressOf(0), it.get().size.toULong())
+    }
 }
 
 @OptIn(ExperimentalForeignApi::class)
 fun NSData.toByteArray(): ByteArray {
-	return ByteArray(length.toInt()).apply {
-		usePinned {
-			memcpy(it.addressOf(0), bytes, length)
-		}
-	}
+    return ByteArray(length.toInt()).apply {
+        usePinned {
+            memcpy(it.addressOf(0), bytes, length)
+        }
+    }
 }

@@ -1,87 +1,38 @@
-import com.vanniktech.maven.publish.DeploymentValidation
+import project.convention.logic.lib
+import project.convention.logic.version
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.android.kotlin.multiplatform.library)
-    alias(libs.plugins.vanniktech.mavenPublish)
+    alias(libs.plugins.swiyu.kmp.module.version)
+    alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.swiyu.kmp.library)
+    alias(libs.plugins.swiyu.kmp.maven.publish)
+}
+
+moduleVersion {
+    moduleVersion.set(version("backup"))
 }
 
 kotlin {
-    androidLibrary {
-        namespace = "ch.admin.foitt.swiyu.shared.backup"
-        compileSdk = libs.versions.android.compileSdk.get().toInt()
-        minSdk = libs.versions.android.minSdk.get().toInt()
-    }
-    jvm()
-
-    listOf(
-        iosArm64(),
-        iosSimulatorArm64(),
-    ).forEach { iosTarget ->
-        iosTarget.binaries.all {
-            linkerOpts("-framework", "Security")
-        }
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes") // Opt-in for expect/actual classes
     }
 
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.kotlinx.serialization.json)
-            implementation(libs.kotlinx.io.core)
+            implementation(lib("kotlinx-serialization-json"))
+            implementation(lib("kotlinx-io-core"))
+
+            implementation(libs.kotlinx.datetime)
+            implementation(libs.kapun.crypto)
+        }
+        iosMain.dependencies {
+            implementation(libs.kzip)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
-    }
-}
-
-
-
-mavenPublishing {
-
-    publishToMavenCentral(validateDeployment = DeploymentValidation.NONE)
-    if (providers.gradleProperty("useSigning").getOrElse("true").toBoolean()) {
-        signAllPublications()
-    }
-
-    coordinates(
-        group.toString(),
-        "backup",
-        version.toString()
-    )
-
-    pom {
-        name = "backup"
-        inceptionYear = "2026"
-        description = "backup library used in the Swiyu Android wallet"
-        url = "https://github.com/swiyu-admin-ch/swiyu-wallet-shared-kmp"
-        licenses {
-            license {
-                name = "MIT"
-                url = "https://opensource.org/licenses/MIT"
-            }
-        }
-        developers {
-            developer {
-                id = "swiyu-admin-ch"
-                name = "swiyu - the Swiss Trust Infrastructure ecosystem"
-                url = "https://github.com/swiyu-admin-ch"
-            }
-        }
-        scm {
-            url = "https://github.com/swiyu-admin-ch/swiyu-wallet-shared-kmp"
+        jvmTest.dependencies {
+            implementation(libs.jose4j)
         }
     }
-}
-
-tasks.register<Exec>("publishBackupToMavenLocal") {
-    group = "publishing"
-    description = "Publishes backup module to mavenLocal with pinned release version and signing disabled"
-
-    workingDir = rootProject.projectDir
-    commandLine(
-        "./gradlew",
-        ":backup:publishAndroidReleasePublicationToMavenLocal",
-        "-PreleaseVersion=0.2.0",
-        "-PuseSigning=false"
-    )
 }

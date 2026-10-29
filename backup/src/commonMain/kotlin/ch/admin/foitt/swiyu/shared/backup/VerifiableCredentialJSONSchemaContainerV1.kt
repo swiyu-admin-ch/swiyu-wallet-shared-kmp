@@ -18,10 +18,9 @@ internal class VerifiableCredentialJSONSchemaContainerV1 private constructor(
     companion object {
         const val TYPE = "VerifiableCredentialJSONSchemaContainerV1"
 
-        fun from(
-            verifiableCredentials: List<VC>
-        ): VerifiableCredentialJSONSchemaContainerV1 = VerifiableCredentialJSONSchemaContainerV1(
-            verifiableCredentials.toSchemaDtoList()
-        )
+        fun from(verifiableCredentials: List<VC>): VerifiableCredentialJSONSchemaContainerV1 =
+            VerifiableCredentialJSONSchemaContainerV1(
+                verifiableCredentials.toSchemaDtoList(),
+            )
     }
 }

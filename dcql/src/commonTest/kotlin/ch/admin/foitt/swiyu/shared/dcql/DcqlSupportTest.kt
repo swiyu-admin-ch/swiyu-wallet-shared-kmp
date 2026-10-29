@@ -7,52 +7,52 @@ import uniffi.kapun_util_rust.Value
 
 class DcqlSupportTest {
 
-	@Test
-	fun matchDcqlCredentials_doesNotThrowForNullClaimPath() {
-		val query = DcqlSupport.decodeDcqlQuery(NULL_CLAIM_QUERY_JSON)
+    @Test
+    fun matchDcqlCredentials_doesNotThrowForNullClaimPath() {
+        val query = DcqlSupport.decodeDcqlQuery(NULL_CLAIM_QUERY_JSON)
 
-		val matches = DcqlSupport.matchDcqlCredentials(
-			query = query,
-			credentialPayloads = listOf(NULL_CLAIM_CREDENTIAL),
-		)
+        val matches = DcqlSupport.matchDcqlCredentials(
+            query = query,
+            credentialPayloads = listOf(NULL_CLAIM_CREDENTIAL),
+        )
 
-		assertTrue(matches.size <= 1)
-		matches.firstOrNull()?.let { match ->
-			assertEquals(1, match.claimValues.size)
-			assertEquals(Value.Null, match.claimValues.first().value)
-			assertTrue(match.claimValues.first().paths.isNotEmpty())
-		}
-	}
+        assertTrue(matches.size <= 1)
+        matches.firstOrNull()?.let { match ->
+            assertEquals(1, match.claimValues.size)
+            assertEquals(Value.Null, match.claimValues.first().value)
+            assertTrue(match.claimValues.first().paths.isNotEmpty())
+        }
+    }
 }
 
 private val NULL_CLAIM_QUERY_JSON = """
-	{
-	  "credentials": [
-	    {
-	      "id": "Elfa",
-	      "format": "dc+sd-jwt",
-	      "multiple": false,
-	      "meta": {
-	        "vct_values": [
-	          "chasseral-vc"
-	        ]
-	      },
-	      "claims": [
-	        {
-	          "id": null,
-	          "path": [
-	            "null"
-	          ],
-	          "values": null
-	        }
-	      ],
-	      "claim_sets": null,
-	      "require_cryptographic_holder_binding": true,
-	      "trusted_authorities": null
-	    }
-	  ],
-	  "credential_sets": null
-	}
+    {
+      "credentials": [
+        {
+          "id": "Elfa",
+          "format": "dc+sd-jwt",
+          "multiple": false,
+          "meta": {
+            "vct_values": [
+              "chasseral-vc"
+            ]
+          },
+          "claims": [
+            {
+              "id": null,
+              "path": [
+                "null"
+              ],
+              "values": null
+            }
+          ],
+          "claim_sets": null,
+          "require_cryptographic_holder_binding": true,
+          "trusted_authorities": null
+        }
+      ],
+      "credential_sets": null
+    }
 """.trimIndent()
 
 private val NULL_CLAIM_CREDENTIAL = """

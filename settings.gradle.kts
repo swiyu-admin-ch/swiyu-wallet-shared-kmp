@@ -20,3 +20,5 @@ include(":proximity")
 include(":consistency")
 include(":password-strength-estimator")
 include(":backup")
+
+includeBuild("build-logic")

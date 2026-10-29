@@ -2,7 +2,7 @@ package ch.admin.foitt.swiyu.shared.backup.model
 
 import kotlinx.io.files.Path
 
-internal expect class PlatformFile {
+expect class PlatformFile {
     val path: Path
 }
 

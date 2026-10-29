@@ -19,13 +19,11 @@ internal class VerifiableCredentialAuthenticationContainerV1 private constructor
     companion object {
         const val TYPE = "VerifiableCredentialAuthenticationContainerV1"
 
-        fun from(
-            verifiableCredentials: List<VC>
-        ): VerifiableCredentialAuthenticationContainerV1? = verifiableCredentials
-            .mapNotNull { it.toAuthenticationDto() }
-            .ifNotEmpty { authenticationDtos ->
-                VerifiableCredentialAuthenticationContainerV1(authenticationDtos)
-            }
-
+        fun from(verifiableCredentials: List<VC>): VerifiableCredentialAuthenticationContainerV1? =
+            verifiableCredentials
+                .mapNotNull { it.toAuthenticationDto() }
+                .ifNotEmpty { authenticationDtos ->
+                    VerifiableCredentialAuthenticationContainerV1(authenticationDtos)
+                }
     }
 }

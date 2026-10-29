@@ -15,7 +15,7 @@ import kotlin.uuid.Uuid
 data class Credential(
     val rawCredential: String,
     val jwks: List<Jwk>?,
-    val jsonSchema: String,
+    val jsonSchema: String? = null,
     val issuerMetadata: String,
     val ocaBundle: String? = null,
 ) {

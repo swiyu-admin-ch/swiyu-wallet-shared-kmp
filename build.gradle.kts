@@ -1,18 +1,27 @@
+buildscript {
+	dependencies {
+		classpath(libs.detekt.gradle.plugin)
+	}
+}
+
 plugins {
 	// Kotlin & KMP plugins
     alias(libs.plugins.kotlinMultiplatform) apply false
-
+	alias(libs.plugins.android.kotlin.multiplatform.library) apply false
+	alias(libs.plugins.uniffi.plugin) apply false
 	// iOS specific plugins
 	alias(libs.plugins.skie) apply false
-    alias(libs.plugins.android.kotlin.multiplatform.library) apply false
-    alias(libs.plugins.android.library) apply false
+
 
 	// Maven Deployment plugin
 	alias(libs.plugins.vanniktech.mavenPublish) apply false
+
+	// detekt build-logic plugin -- apply directly on root level
+	alias(libs.plugins.swiyu.kmp.detekt)
 }
 
-val releaseVersion = providers.gradleProperty("releaseVersion")
-	.orElse(providers.environmentVariable("RELEASE_VERSION"))
+val releaseVersion = providers.gradleProperty("APP_VERSION_NAME")
+	.orElse(providers.environmentVariable("APP_VERSION_NAME"))
 	.map { rawVersion ->
 		rawVersion
 			.removePrefix("refs/tags/")
@@ -21,7 +30,6 @@ val releaseVersion = providers.gradleProperty("releaseVersion")
 	.orElse("")
 
 allprojects {
-	group = "ch.admin.swiyu.mobile"
 	version = releaseVersion.get()
 }
 
@@ -41,28 +49,13 @@ tasks.register("allTests") {
 	)
 }
 
-tasks.register("assembleAndroidReleaseArtifacts") {
-	group = "build"
-	description = "Assembles Android AAR artifacts for all Android KMP modules."
-	dependsOn(
-		modules.map { moduleName -> ":$moduleName:assembleAndroidMain" }
-	)
-}
-
-tasks.register("publishAndroidPackages") {
-	group = "publishing"
-	description = "Publishes selected Android packages to GitHub Packages."
-	dependsOn(
-		modules
-			.map { moduleName -> ":$moduleName:publishAndroidPublicationToGithubPackagesRepository" }
-	)
-}
-
-tasks.register("publishAndroidPackagesToMavenCentral") {
-	group = "publishing"
-	description = "Publishes selected Android packages to MavenCentral."
-	dependsOn(
-		modules
-			.map { moduleName -> ":$moduleName:publishToMavenCentral" }
-	)
+modules.forEach { moduleName ->
+	project(":$moduleName") {
+		tasks.matching { it.name == "allTests" }.configureEach {
+			finalizedBy(
+				tasks.matching { it.name == "koverHtmlReport" },
+				tasks.matching { it.name == "koverXmlReport" }
+			)
+		}
+	}
 }

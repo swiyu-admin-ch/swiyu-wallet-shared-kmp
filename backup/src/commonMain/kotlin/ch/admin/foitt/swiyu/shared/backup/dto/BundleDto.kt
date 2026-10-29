@@ -1,6 +1,5 @@
 package ch.admin.foitt.swiyu.shared.backup.dto
 
-import ch.admin.foitt.swiyu.shared.backup.dto.toBundleDto
 import ch.admin.foitt.swiyu.shared.backup.model.VC
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -21,6 +20,6 @@ internal fun List<VC>.toBundleDtoList(): List<BundleDto> = this
 internal fun Map.Entry<String?, List<String>>.toBundleDto() = key?.let {
     BundleDto(
         credentialIds = value,
-        data = it
+        data = it,
     )
 }

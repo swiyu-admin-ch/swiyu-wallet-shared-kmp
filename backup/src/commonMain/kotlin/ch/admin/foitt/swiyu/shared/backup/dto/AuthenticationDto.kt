@@ -20,6 +20,6 @@ internal fun VC.toAuthenticationDto() = refreshToken?.let { token ->
     AuthenticationDto(
         vcId = id.toString(),
         refreshToken = token,
-        dpopJwk = dpopJwk?.toJwkDto()
+        dpopJwk = dpopJwk?.toJwkDto(),
     )
 }

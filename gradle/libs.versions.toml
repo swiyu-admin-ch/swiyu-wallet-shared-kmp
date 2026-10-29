@@ -3,22 +3,47 @@ agp = "9.2.1"
 android-compileSdk = "37"
 android-minSdk = "24"
 kotlin = "2.4.10"
+toolchain-jdk = "21"
 
 android-ndk = "27.3.13750724"
-kapunsdk = "1.0.0-RC13"
-kotlinx-coroutines = "1.9.0"
+kapunsdk = "1.0.3"
+kzip = "2.0.0"
+kotlinx-coroutines = "1.11.0"
+kotlinx-datetime = "0.8.0"
 kotlinx-io = "0.9.1"
-kotlinx-serialization = "1.9.0"
+kotlinx-serialization = "1.11.0"
 mavenpublish = "0.37.0"
-skie = "0.10.14"
-uniffi = "1.2.3"
+skie = "0.10.15"
+uniffi = "1.3.2"
+
+# used in build-logic plugins
+kover = "0.9.11"
+detekt = "2.0.0-alpha.6"
+
+# module versions
+backup = "0.1.0"
+consistency = "0.4.0"
+dcql = "0.4.0"
+proximity = "0.4.0"
+password-strength-estimator = "0.4.0"
 
 [libraries]
+jose4j = { module = "org.bitbucket.b_c:jose4j", version = "0.9.5" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kotlinx-io-core = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlinx-io" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kzip = { module = "de.jonasbroeckmann.kzip:kzip", version.ref = "kzip" }
 skie = { module = "co.touchlab.skie:configuration-annotations", version.ref = "skie" }
+
+# used in build-logic plugins
+kover-gradle-plugin = { group = "org.jetbrains.kotlinx", name = "kover-gradle-plugin", version.ref = "kover" }
+detekt-gradle-plugin = { module = "dev.detekt:detekt-gradle-plugin", version.ref = "detekt" }
+detekt-ktlint-wrapper = { module = "dev.detekt:detekt-rules-ktlint-wrapper", version.ref = "detekt" }              # used in build-logic (formerly detekt-formatting)
+android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+mavenPublish-gradle-plugin = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "mavenpublish" }  # used in build-logic
 
 # Kapun SDK KMP libraries
 kapun-proximity = { module = "org.kapunsdk:kapun-proximity", version.ref = "kapunsdk" }
@@ -30,8 +55,18 @@ kapun-crypto = { module = "org.kapunsdk:kapun-crypto", version.ref = "kapunsdk" 
 
 [plugins]
 android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
-android-library = { id = "com.android.library", version.ref = "agp" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 skie = { id = "co.touchlab.skie", version.ref = "skie" }
 uniffi-plugin = { id = "ch.ubique.uniffi.plugin", version.ref = "uniffi" }
 vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "mavenpublish" }
+
+detekt = { id = "dev.detekt", version.ref = "detekt" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+
+swiyu-kmp-library = { id = "swiyu.kmp.library" }
+swiyu-kmp-detekt = { id = "swiyu.kmp.detekt" }
+swiyu-kmp-kover = { id = "swiyu.kmp.kover" }
+swiyu-kmp-maven-publish = { id = "swiyu.kmp.maven.publish" }
+swiyu-kmp-module-version = { id = "swiyu.kmp.module.version" }
+swiyu-kmp-jna-native-fix = { id = "swiyu.kmp.jna.native.fix" }

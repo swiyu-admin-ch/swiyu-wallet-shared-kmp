@@ -12,9 +12,12 @@ internal data class BackupContainerV1(
     @OptIn(ExperimentalTime::class)
     @SerialName("creation_date")
     val creationDate: String,
+    @SerialName("profile_version")
+    val profileVersion: String = PROFILE_VERSION,
 ) {
     companion object {
         const val TYPE = "WalletBackupContainerV1"
+        const val PROFILE_VERSION = "swiss-profile-portability:1.0.0"
 
         @OptIn(ExperimentalTime::class)
         operator fun invoke(clock: Clock = Clock.System): BackupContainerV1 =

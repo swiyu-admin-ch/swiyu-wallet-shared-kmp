@@ -3,7 +3,7 @@
 # swiyu - shared KMP libraries
 
 An official Swiss Government project made by the [Federal Office of Information Technology, Systems and Telecommunication FOITT](https://www.bit.admin.ch/en)
-as part of the electronic identity (E-ID) project.
+as part of the electronic identity (e-ID) project.
 
 ## Table of Contents
 
@@ -21,10 +21,10 @@ as part of the electronic identity (E-ID) project.
 
 ## Overview
 
-This repository is part of the ecosystem developed for the future official Swiss E-ID.
+This repository is part of the ecosystem developed for the future official Swiss e-ID.
 It provides the shared Kotlin Multiplatform (KMP) libraries consumed by the swiyu wallet on both iOS and Android, offering a single, versioned home for the shared code and a stable API surface for the platform clients.
 
-The goal of this repository is to engage with the community and collaborate on developing the Swiss ecosystem for E-ID and other credentials. We warmly encourage you to engage with us by creating an issue in the repository.
+The goal of this repository is to engage with the community and collaborate on developing the Swiss ecosystem for e-ID and other credentials. We warmly encourage you to engage with us by creating an issue in the repository.
 
 For more information about the project please visit the [introduction into Public Beta](https://www.eid.admin.ch/en/public-beta-e). The technical documentation of the swiyu Public Beta Trust Infrastructure can be found [here](https://swiyu-admin-ch.github.io/).
 
@@ -36,6 +36,7 @@ The repository is a Gradle multi-module project containing the following Kotlin 
 - `proximity`: Proximity presentation support for in-person / offline credential presentation, exposing the Kapun SDK proximity APIs.
 - `consistency`: Check consistency between SD-JWTs
 - `password-strength-estimator`: Wrapper around zxcvbn to indicate strength of a password string
+- `backup` : Export and import of Verifiable Credentials in Wallet Backup Containers
 - `library`: Umbrella module that exports the shared APIs and builds the `BITSwiyuSharedKMP` XCFramework for iOS.
 
 Supported targets: `android`, `iosArm64`, `iosSimulatorArm64` and `jvm` (used to run the tests).
@@ -44,7 +45,7 @@ Supported targets: `android`, `iosArm64`, `iosSimulatorArm64` and `jvm` (used to
 
 The project targets Android and iOS.
 The iOS artifacts currently target at least iOS 16.0.
-The CI build uses Java 17.
+The CI build uses Java 21.
 
 In your terminal, after having cloned the current repository, run the following command:
 
@@ -54,35 +55,48 @@ In your terminal, after having cloned the current repository, run the following 
 
 The command verifies that all modules compile and runs the configured tests.
 
+### iOS XCFramework
+
 To build the iOS XCFramework, run:
 
 ```bash
-./gradlew :library:assembleXCFramework
+./gradlew :library:assembleBITSwiyuSharedKMPXCFramework 
 ```
 
-For release packaging, the repository CI uses:
+For release packaging, the repository's CI runs:
 
 ```bash
-./gradlew :library:assembleXCFramework -PreleaseBuild=true -PforceBuildNativeLibs=true
+./gradlew :library:assembleBITSwiyuSharedKMPReleaseXCFramework -PreleaseBuild=true -PforceBuildNativeLibs=true
 ```
 
 The generated XCFramework can then be found under `library/build/XCFrameworks/`.
+
+### Android AARs
+To build the Android AAR for a module, run:
+
+```bash
+./gradlew :<module>:assembleAndroidMain
+```
+
+The generated AAR for the module can then be found under `<module>/build/outputs/aar/`.
 
 ## Consuming the libraries
 
 ### Android
 
-The release AARs for all Android modules are attached to each GitHub release as `BITSwiyuSharedKMP-android-aars.zip`. The `dcql` module is additionally published to GitHub Packages under the group `ch.admin.foitt.swiyu.shared.kmp`:
+The release AARs for all Android modules are attached to each GitHub release as `BITSwiyuSharedKMP-android-aars.zip`.
+
+Each Android module is published in Maven Central under the namespace `ch.admin.swiyu.mobile`. 
 
 ```kotlin
 dependencies {
-    implementation("ch.admin.foitt.swiyu.shared.kmp:dcql:<version>")
+    implementation("ch.admin.swiyu.mobile:<module>-android:<version>")
 }
 ```
 
 ### iOS
 
-For iOS, the `library` module produces the `BITSwiyuSharedKMP` XCFramework, which re-exports the shared APIs. The XCFramework is attached to each GitHub release and can be integrated into an Xcode project like any other binary framework.
+For iOS, the `library` module produces the `BITSwiyuSharedKMP` XCFramework, which re-exports the shared APIs. The XCFramework is attached to each GitHub release as `BITSwiyuSharedKMP.xcframework.zip` and can be integrated into an Xcode project like any other binary framework.
 
 ## Missing Features and Known Issues
 

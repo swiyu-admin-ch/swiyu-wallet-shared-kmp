@@ -19,5 +19,5 @@ internal data class VCDto(
 internal fun VC.toVCDto() = VCDto(
     id = id.toString(),
     format = format,
-    credentials = credentials.map { it.toCredentialDto() }
+    credentials = credentials.map { it.toCredentialDto() },
 )

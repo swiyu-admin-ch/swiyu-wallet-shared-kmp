@@ -1,7 +1,6 @@
 package ch.admin.foitt.swiyu.shared.backup.dto
 
 import ch.admin.foitt.swiyu.shared.backup.model.Credential
-import ch.admin.foitt.swiyu.shared.backup.model.Jwk
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlin.uuid.ExperimentalUuidApi

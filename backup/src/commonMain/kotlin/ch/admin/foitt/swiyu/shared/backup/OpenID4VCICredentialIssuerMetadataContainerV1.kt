@@ -18,10 +18,9 @@ internal class OpenID4VCICredentialIssuerMetadataContainerV1 private constructor
     companion object {
         const val TYPE = "OpenID4VCICredentialIssuerMetadataContainerV1"
 
-        fun from(
-            verifiableCredentials: List<VC>,
-        ): OpenID4VCICredentialIssuerMetadataContainerV1 = OpenID4VCICredentialIssuerMetadataContainerV1(
-            verifiableCredentials.toMetadataDtoList()
-        )
+        fun from(verifiableCredentials: List<VC>): OpenID4VCICredentialIssuerMetadataContainerV1 =
+            OpenID4VCICredentialIssuerMetadataContainerV1(
+                verifiableCredentials.toMetadataDtoList(),
+            )
     }
 }

@@ -9,7 +9,4 @@ import uniffi.kapun_util_rust.Value
  * @property paths list of dcql pointer paths.
  * @property value Resolved claim value.
  */
-data class DcqlClaimValue(
-    val paths: List<PointerPart>,
-    val value: Value,
-)
+data class DcqlClaimValue(val paths: List<PointerPart>, val value: Value)
