@@ -17,8 +17,7 @@ import uniffi.kapun_util_rust.Value
 /**
  * DCQL helper methods that wrap Kapun SDK query matching and VP token generation.
  */
-object DcqlSupport {
-
+class DcqlSupport {
     init {
         SdJwtParser.register()
         SwissProfileTrustedDidAuthority.register()

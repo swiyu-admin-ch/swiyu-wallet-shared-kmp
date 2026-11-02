@@ -7,11 +7,13 @@ import uniffi.kapun_util_rust.Value
 
 class DcqlSupportTest {
 
+    private val dcqlSupport = DcqlSupport()
+
     @Test
     fun matchDcqlCredentials_doesNotThrowForNullClaimPath() {
-        val query = DcqlSupport.decodeDcqlQuery(NULL_CLAIM_QUERY_JSON)
+        val query = dcqlSupport.decodeDcqlQuery(NULL_CLAIM_QUERY_JSON)
 
-        val matches = DcqlSupport.matchDcqlCredentials(
+        val matches = dcqlSupport.matchDcqlCredentials(
             query = query,
             credentialPayloads = listOf(NULL_CLAIM_CREDENTIAL),
         )
